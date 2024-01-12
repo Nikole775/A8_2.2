@@ -59,7 +59,7 @@ class UI:
         print("0.back")
         print(".................................................................")
 
-    def get_input (self, txt = "->"):
+    def get_input (self, txt="->"):
         return input(txt)
 
     def choose_option_menu(self,option):
@@ -69,6 +69,12 @@ class UI:
         elif option == "2":
             self.menu_level = 1
             self.rent_return_book()
+        elif option == "3":
+            self.menu_level = 1
+            self.search_clients_books()
+        elif option == "4":
+            self.menu_level = 1
+            self.statistics()
         elif option == "0":
             print("You stopped the program. Bye!")
             self.exit_flag = True
@@ -92,6 +98,25 @@ class UI:
                 self.choose_option_rent_return_book(option2)
             except UIerror as ve:
                 print(ve)
+
+    def search_clients_books(self):
+        while self.menu_level == 1:
+            try:
+                self.search_clients_books_menu()
+                option3 = self.get_input()
+                self.choose_option_search_clients_books(option3)
+            except UIerror as ve:
+                print(ve)
+
+    def statistics(self):
+        while self.menu_level == 1:
+            try:
+                self.statistics_menu()
+                option4 = self.get_input()
+                self.choose_option_statistics(option4)
+            except UIerror as ve:
+                print(ve)
+
     def choose_option_clients_books(self,option):
         if option == "1":
             self.add_book_UI()
@@ -125,6 +150,34 @@ class UI:
             self.return_book_UI()
         elif option == "9":
             self.list_rentals()
+        elif option == "0":
+            self.menu_level = 0
+        else:
+            raise UIerror("That was not a valid option!")
+
+    def choose_option_search_clients_books(self, option):
+        if option == "1":
+            self.search_book_client_id(option)
+        elif option == "2":
+            self.search_book_client_by_string(option)
+        elif option == "3":
+            self.search_book_client_by_string(option)
+        elif option == "4":
+            self.search_book_client_id(option)
+        elif option == "5":
+            self.search_book_client_by_string(option)
+        elif option == "0":
+            self.menu_level = 0
+        else:
+            raise UIerror("That was not a valid option! ")
+
+    def choose_option_statistics(self, option):
+        if option == "1":
+            self.most_rented_books_UI()
+        elif option == "2":
+            self.most_active_clients_UI()
+        elif option == "3":
+            self.most_rented_author_UI()
         elif option == "0":
             self.menu_level = 0
         else:
@@ -224,6 +277,41 @@ class UI:
 
     def list_rentals(self):
         print(self.__rental_services.display_rentals())
+
+    def search_book_client_id(self, option):
+        try:
+            if option == "1":
+                partial_id = self.get_input("Give the wanted ID: ")
+                print(self.__book_services.search_book_by_id(partial_id))
+            else:
+                partial_id = self.get_input("Give the wanted ID: ")
+                print(self.__client_services.search_client_by_id(partial_id))
+        except InputError as ve:
+            print(ve)
+
+    def search_book_client_by_string(self, option):
+        try:
+            if option == "2":
+                partial_title = self.get_input("Give the wanted Title: ")
+                print(self.__book_services.search_book_by_title(partial_title))
+            elif option == "3":
+                partial_author = self.get_input("Give the wanted Author: ")
+                print(self.__book_services.search_book_by_author(partial_author))
+            else:
+                partial_name = self.get_input("Give the wanted Name: ")
+                print(self.__client_services.search_client_by_name(partial_name))
+        except InputError as ve:
+            print(ve)
+
+    def most_rented_books_UI(self):
+        print(*self.__rental_services.most_rented_books(), sep='\n')
+
+    def most_active_clients_UI(self):
+        print(*self.__rental_services.most_active_clients(), sep='\n')
+
+    def most_rented_author_UI(self):
+        print(*self.__rental_services.most_rented_author(), sep='\n')
+
     def start(self):
         while not self.exit_flag:
             try:

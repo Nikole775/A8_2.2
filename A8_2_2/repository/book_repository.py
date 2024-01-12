@@ -46,3 +46,30 @@ class Book_Repository:
             raise InputError("That was not a valid ID! :(")
         if self.find_book_id(user_input) == False:
             raise InputError("The book with this ID doesn't exists")
+
+    def search_book_by_id_repo(self, partial_id):
+        if not partial_id.isdigit():
+            raise InputError("That was not an integer! :(")
+        result = []
+        for book in self._books:
+            if str(partial_id) in str(book.book_id):
+                result.append(book)
+        return result
+
+    def search_book_by_title_repo(self, partial):
+        if partial == '':
+            raise InputError("This field cannot be empty!")
+        result = []
+        for book in self._books:
+            if partial.lower() in book.title.lower():
+                result.append(book)
+        return result
+
+    def search_book_by_author_repo(self, partial):
+        if partial == '':
+            raise InputError("This field cannot be empty!")
+        result = []
+        for book in self._books:
+            if partial.lower() in book.author.lower():
+                result.append(book)
+        return result

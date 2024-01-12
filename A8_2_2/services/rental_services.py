@@ -85,3 +85,15 @@ class Rental_services:
 
     def search_rental_id(self, rent_id):
         self.__repository.search_rental(rent_id)
+
+    def most_rented_books(self):
+        books_list = self.__book_repo.get_all_books()
+        return (self.__repository.most_rented_books_repo(books_list))
+
+    def most_active_clients(self):
+        clients_list = self.__client_repo.get_all_clients()
+        return(self.__repository.most_active_clients_repo(clients_list))
+
+    def most_rented_author(self):
+        books_list = self.__book_repo.get_all_books()
+        return self.__repository.most_rented_author_repo(books_list)

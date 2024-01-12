@@ -46,4 +46,23 @@ class Client_Repository:
             if str(client.client_id) == str(new_client.client_id):
                 client.name = new_client.name
 
+    def search_client_by_id_repo(self, partial):
+        if not partial.isdigit():
+            raise InputError("That was not an integer! :(")
+        result = []
+        for client in self._clients:
+            if str(partial) in str(client.client_id):
+                result.append(client)
+        return result
+
+    def search_client_by_name_repo(self, partial):
+        if partial == '':
+            raise InputError("This field cannot be empty!")
+        result = []
+        for client in self._clients:
+            if partial.lower() in client.name.lower():
+                result.append(client)
+        return result
+
+
 

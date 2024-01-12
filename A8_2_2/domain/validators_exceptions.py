@@ -28,7 +28,7 @@ class BookValidator:
     @staticmethod
     def verify_id_rent(rent_id):
         if not rent_id.isdigit() or len(str(rent_id)) != 8:
-            raise BookValidatorException("That was not a valid ID!")
+            raise RepositoryError("That was not a valid ID!")
 
 
 class ClientValidatorException(Exception):
